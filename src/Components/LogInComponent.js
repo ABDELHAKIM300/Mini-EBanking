@@ -20,9 +20,9 @@ class LogInComponent extends Component {
         this.props
             .dispatch(loginAction(data))
             .then(data => {
-                this.state = {
+                this.setState({
                     error: null,
-                };
+                });
             })
             .catch(err => {
                 this.setState({

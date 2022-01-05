@@ -1,0 +1,38 @@
+.root {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile {
+    font-size: 30px;
+    margin-top: 30px;
+    margin-inline: auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.accounts {
+    margin-inline: auto;
+}
+
+.historyIcon {
+    font-size: 74px !important;
+    margin: auto;
+    color: blue;
+    margin-block: 50px;
+}
+
+.welcome {
+    margin-bottom: 50px;
+}
+
+.card {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cardButton {
+    display: flex;
+    margin-inline: 50px;
+    margin-block: 25px;
+    width: 321px;
+}

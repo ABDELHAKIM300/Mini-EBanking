@@ -28,7 +28,17 @@ export const Session = (state = initialState, action) => {
                 return {user, authenticated: true};
             }
             return {...state, user, authenticated: false};
-        
+
+        default:
+            return state;
+    }
+}
+
+export const Data = (state = {accounts: [],}, action) => {
+    switch (action.type) {
+        case ActionTypes.GETACCOUNTS:
+            const accounts =  action.payload.data;
+            return {accounts: accounts};
         default:
             return state;
     }

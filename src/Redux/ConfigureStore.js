@@ -9,6 +9,7 @@ export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
             session: reducers.Session,
+            data: reducers.Data,
         }),
         composeEnhancers(
             applyMiddleware(promiseMiddleware)

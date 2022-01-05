@@ -25,3 +25,13 @@ export const signUp = data => {
             throw err;
         });
 };
+export const getAccounts = id => {
+    return instance
+        .get(`tna/ebankingService/users/${id}/accounts`)
+        .then(response => {
+            return response.data;
+        })
+        .catch(err => {
+            throw err;
+        });
+};
