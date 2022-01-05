@@ -20,6 +20,15 @@ export const Session = (state = initialState, action) => {
                 return {user, authenticated: true};
             }
             return {...state, user, authenticated: false};
+
+        case ActionTypes.SIGNUP:
+            if (!action.error) {
+                user = action.payload.data
+                store.set("user", user);
+                return {user, authenticated: true};
+            }
+            return {...state, user, authenticated: false};
+        
         default:
             return state;
     }

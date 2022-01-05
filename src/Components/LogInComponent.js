@@ -5,6 +5,12 @@ import {connect} from "react-redux";
 import "../Assets/Styles/login.css";
 
 class LogInComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: null,
+        };
+    };
 
     handleSubmit = (values) => {
         const data = {
@@ -14,10 +20,15 @@ class LogInComponent extends Component {
         this.props
             .dispatch(loginAction(data))
             .then(data => {
-                console.log(data.payload.data);
+                this.state = {
+                    error: null,
+                };
             })
             .catch(err => {
-                console.log("err", err);
+                this.setState({
+                    error: err.message
+                })
+                console.log(err);
             });
     };
 
@@ -77,7 +88,7 @@ class LogInComponent extends Component {
                             />
                             <p>{errors.password && touched.password && errors.password}</p>
                             <button type="submit" disabled={isSubmitting}>
-                                Submit
+                                Sign In
                             </button>
                         </form>
                     )}

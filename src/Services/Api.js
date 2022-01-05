@@ -14,3 +14,14 @@ export const login = data => {
             throw err;
         });
 };
+
+export const signUp = data => {
+    return instance
+        .post("tna/ebankingService/signUp", data)
+        .then(response => {
+            return response.data;
+        })
+        .catch(err => {
+            throw err;
+        });
+};
