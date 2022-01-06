@@ -45,3 +45,13 @@ export const makeTransfer = data => {
             throw err;
         });
 };
+export const getTransfersList = id => {
+    return instance
+        .get(`tna/ebankingService/users/${id}/transfers`)
+        .then(response => {
+            return response.data;
+        })
+        .catch(err => {
+            throw err;
+        });
+};

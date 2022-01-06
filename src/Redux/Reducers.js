@@ -1,6 +1,5 @@
 import * as ActionTypes from "./ActionTypes";
 import store from 'store'
-import {MAKETRANSFER} from "./ActionTypes";
 
 const initialState = {
     user: store.get("user"),
@@ -55,6 +54,12 @@ export const Data = (state = {accounts: [], transfers: []}, action) => {
                     return account;
                 });
                 return {accounts, transfers: [...state.transfers, transfer]};
+            }
+            return state;
+        case ActionTypes.GETTRANSFERLISTS:
+            if (!action.error) {
+                const transfers = action.payload.data;
+                return {...state, transfers: transfers};
             }
             return state;
         default:

@@ -6,6 +6,7 @@ import RegisterComponent from "./RegisterComponent";
 import HomeComponent from "./HomeComponent";
 import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
 import MakeTransferComponent from "./MakeTransferComponent";
+import HistoryTransferComponent from "./HistoryTransferComponent";
 
 class MainComponent extends Component {
 
@@ -36,6 +37,7 @@ class MainComponent extends Component {
                     <Route exact path="/inscription" component={RegisterComponent}/>
                     <Route exact path="/home" component={HomeComponent}/>
                     <Route exact path="/maketransfer" component={MakeTransferComponent}/>
+                    <Route exact path="/historytransfer" component={HistoryTransferComponent}/>
                     <Route path="/" component={LogInComponent}/>
                 </Switch>
             </div>

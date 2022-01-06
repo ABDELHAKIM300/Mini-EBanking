@@ -1,0 +1,19 @@
+.table {
+    width: 90%;
+    margin-inline: auto;
+}
+
+.tools {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.dateRange {
+    margin-bottom: 10px;
+}
+
+.search {
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: 10px;
+}
