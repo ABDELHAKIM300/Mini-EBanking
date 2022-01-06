@@ -25,10 +25,10 @@ class LogInComponent extends Component {
                 });
             })
             .catch(err => {
+                const message = err.response ? err.response.data.data.errorMessage : err.message;
                 this.setState({
-                    error: err.message
-                })
-                console.log(err);
+                    error: message
+                });
             });
     };
 
@@ -65,6 +65,7 @@ class LogInComponent extends Component {
                           /* and other goodies */
                       }) => (
                         <form onSubmit={handleSubmit}>
+                            <p>{this.state.error}</p>
                             <label htmlFor="login">Login</label>
                             <input
                                 id="login"

@@ -35,3 +35,13 @@ export const getAccounts = id => {
             throw err;
         });
 };
+export const makeTransfer = data => {
+    return instance
+        .post("tna/ebankingService/transfer", data)
+        .then(response => {
+            return response.data;
+        })
+        .catch(err => {
+            throw err;
+        });
+};

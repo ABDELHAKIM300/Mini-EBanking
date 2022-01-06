@@ -1,5 +1,6 @@
 import * as ActionTypes from "./ActionTypes";
 import store from 'store'
+import {MAKETRANSFER} from "./ActionTypes";
 
 const initialState = {
     user: store.get("user"),
@@ -34,11 +35,28 @@ export const Session = (state = initialState, action) => {
     }
 }
 
-export const Data = (state = {accounts: [],}, action) => {
+export const Data = (state = {accounts: [], transfers: []}, action) => {
     switch (action.type) {
         case ActionTypes.GETACCOUNTS:
-            const accounts =  action.payload.data;
-            return {accounts: accounts};
+            if (!action.error) {
+                const accounts = action.payload.data;
+                return {...state, accounts: accounts};
+            }
+            return state;
+        case ActionTypes.MAKETRANSFER:
+            if (!action.error) {
+                const transfer = action.payload.data;
+                // update the debit account balance after transfer
+                const accounts = state.accounts.map(account => {
+                    if (account.accountNumber === transfer.debitAccount) {
+                        const newSolde = account.solde - transfer.amount;
+                        return {...account, solde: newSolde};
+                    }
+                    return account;
+                });
+                return {accounts, transfers: [...state.transfers, transfer]};
+            }
+            return state;
         default:
             return state;
     }

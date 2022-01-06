@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import RegisterComponent from "./RegisterComponent";
 import HomeComponent from "./HomeComponent";
 import {AppBar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
+import MakeTransferComponent from "./MakeTransferComponent";
 
 class MainComponent extends Component {
 
@@ -34,6 +35,7 @@ class MainComponent extends Component {
                 <Switch>
                     <Route exact path="/inscription" component={RegisterComponent}/>
                     <Route exact path="/home" component={HomeComponent}/>
+                    <Route exact path="/maketransfer" component={MakeTransferComponent}/>
                     <Route path="/" component={LogInComponent}/>
                 </Switch>
             </div>
