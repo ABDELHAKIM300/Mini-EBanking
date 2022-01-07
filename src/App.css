@@ -1,0 +1,11 @@
+a {
+    text-decoration: none;
+    color: white;
+}
+
+button {
+    text-transform: none !important;
+}
+.appBar{
+ background-color: #4c5caf !important;
+}

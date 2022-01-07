@@ -25,6 +25,8 @@ class LogInComponent extends Component {
                 });
             })
             .catch(err => {
+                // if we have an error with a response we display
+                // the message otherwise we display just the error message
                 const message = err.response ? err.response.data.data.errorMessage : err.message;
                 this.setState({
                     error: message

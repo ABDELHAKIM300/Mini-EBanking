@@ -1,18 +1,18 @@
 import * as ActionTypes from "./ActionTypes";
 import store from 'store'
 
+
 const initialState = {
     user: store.get("user"),
-    authenticated: false
+    authenticated: store.get("user") ? true :false,
 };
 
 export const Session = (state = initialState, action) => {
     let user;
     switch (action.type) {
         case ActionTypes.LOGOUT:
-            store.remove("user");
+            //to clear user data
             return {authenticated: false, user: null};
-
         case ActionTypes.LOGIN:
             if (!action.error) {
                 user = action.payload.data
@@ -62,6 +62,9 @@ export const Data = (state = {accounts: [], transfers: []}, action) => {
                 return {...state, transfers: transfers};
             }
             return state;
+        case ActionTypes.LOGOUT:
+            //to clear user data
+            return {accounts: [], transfers: []};
         default:
             return state;
     }

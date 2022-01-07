@@ -1,9 +1,12 @@
 import {createAction} from "redux-actions";
-import {getAccounts, getTransfersList, login, makeTransfer, signUp} from "../Services/Api";
+import {getAccounts, getTransfersList, login, logout, makeTransfer, signUp} from "../Services/Api";
 import * as types from './ActionTypes';
 
 export const loginAction = createAction(types.LOGIN, async obj => {
     return await login(obj);
+});
+export const logoutAction = createAction(types.LOGOUT,() => {
+    return logout();
 });
 export const signUpAction = createAction(types.SIGNUP, async obj => {
     return await signUp(obj);

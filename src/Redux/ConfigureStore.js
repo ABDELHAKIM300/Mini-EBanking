@@ -14,5 +14,5 @@ export const ConfigureStore = () => {
         composeEnhancers(
             applyMiddleware(promiseMiddleware)
         ));
-    return store
+    return store;
 }

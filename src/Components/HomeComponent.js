@@ -11,18 +11,23 @@ class HomeComponent extends Component {
         super(props);
         this.state = {
             user: this.props.session.user,
+            isLoaded: false,
         };
     };
 
     componentDidMount() {
-        this.props.dispatch(getAccountsAction(this.state.user.id))
+        this.props.dispatch(getAccountsAction(this.state.user.id)) // get the list of accounts
             .then(data => {
-                console.log(data.payload.data);
+                this.setState({
+                    isLoaded: true,
+                });
             }).catch(err => {
             console.log(err);
+            this.setState({
+                isLoaded: true,
+            });
         })
     }
-
     displayAccount = (account) => {
         return (
             <Card sx={{width: 400}}>
@@ -44,16 +49,20 @@ class HomeComponent extends Component {
         );
     }
 
+    navigateToPath = (path) => {
+        this.props.history.push(path);
+    }
 
     render() {
         const accounts = this.props.data.accounts;
+        const isLoaded = this.state.isLoaded;
         return (
             <div className="root">
                 <div className="profile">
                     <div className="welcome">Welcome {this.props.session.user.fullNuame}</div>
                     <div className={"card"}>
                         <Card className={"cardButton"}>
-                            <CardActionArea sx={{display: 'flex'}}>
+                            <CardActionArea onClick={() => this.navigateToPath("transfer")} sx={{display: 'flex'}}>
                                 <Box sx={{display: 'flex', marginBlock: 'auto', alignItems: 'center'}}>
                                     <CardContent sx={{flex: '1 0 auto'}}>
                                         <Typography style={{"margin": "auto"}} component="div" variant="h5">
@@ -65,7 +74,8 @@ class HomeComponent extends Component {
                             </CardActionArea>
                         </Card>
                         <Card className={"cardButton"}>
-                            <CardActionArea sx={{display: 'flex'}}>
+                            <CardActionArea onClick={() => this.navigateToPath("history")}
+                                            sx={{display: 'flex'}}>
                                 <Box sx={{display: 'flex', marginBlock: 'auto', alignItems: 'center'}}>
                                     <CardContent sx={{flex: '1 0 auto'}}>
                                         <Typography style={{"margin": "auto"}} component="div" variant="h5">
@@ -79,12 +89,18 @@ class HomeComponent extends Component {
                     </div>
                 </div>
                 <div className="accounts">
-                    <h1>My Accounts</h1>
-                    {
-                        accounts.map(account => {
-                            return (this.displayAccount(account))
-                        })
+                    {accounts.length > 0 ?
+                        <>
+                            <h1>My Accounts</h1>
+                            {
+                                accounts.map(account => {
+                                    return (this.displayAccount(account))
+                                })
+                            }
+                        </>
+                        : isLoaded && <h1>You don't have an <br/>account yet</h1>
                     }
+
                 </div>
             </div>
         );

@@ -50,16 +50,14 @@ class HistoryTransferComponent extends Component {
     };
 
     componentDidMount() {
-        if(this.props.data.transfers.length===0) {
-            this.props.dispatch(getTransferListAction(this.state.user.id))
-                .then(data => {
-                    this.setState({
-                        rows: data.payload.data,
-                    });
-                }).catch(err => {
-                console.log(err);
-            })
-        }
+        this.props.dispatch(getTransferListAction(this.state.user.id)) //Get the list of transfers
+            .then(data => {
+                this.setState({
+                    rows: data.payload.data,
+                });
+            }).catch(err => {
+            console.log(err);
+        })
     }
 
 
@@ -75,10 +73,12 @@ class HistoryTransferComponent extends Component {
             rowsPerPage: event.target.value,
         })
     };
+    // getDateFormat take for exemple "2022-01-06T23:20:53.000+00:00" and return "01/06/2022"
     getDateFormat = (value) => {
         const d = new Date(value);
         return [String(d.getMonth() + 1).padStart(2, '0'), String(d.getDate()).padStart(2, '0'), d.getFullYear()].join("/");
     }
+    //displayValue return the element according to its type money or date or other
     displayValue = (column, value) => {
         switch (column) {
             case "valueDate":
@@ -101,19 +101,19 @@ class HistoryTransferComponent extends Component {
         }
         return rows;
     }
-    handleSearch = (event)=>{
+    handleSearch = (event) => {
         this.setState({
-            search : event.target.value,
+            search: event.target.value,
         });
     }
-    searchByReason = (rows)=>{
+    searchByReason = (rows) => {
         const search = this.state.search;
-        if(search!==""){
+        if (search !== "") {
             return rows.filter(row => row.reason.includes(search));
         }
         return rows;
     }
-    allFilter = ()=>{
+    allFilter = () => {
         return this.searchByReason(this.filterByDate());
     }
 
@@ -124,43 +124,42 @@ class HistoryTransferComponent extends Component {
             <div className={"table"}>
                 <div className={"tools"}>
                     <div className={"dateRange"}>
-                    <p>Date Range (up to 4 weeks)</p>
-                    <LocalizationProvider dateAdapter={AdapterDateFns}>
-                        <MobileDateRangePicker
-                            // disablePast
-                            value={dates}
-                            maxDate={getWeeksAfter(dates[0], 4)}
-                            onChange={(newValue) => {
-                                this.setState({dates: newValue});
-                            }}
-                            renderInput={(startProps, endProps) => (
-                                <React.Fragment>
-                                    <TextField {...startProps} />
-                                    <Box sx={{mx: 2}}> to </Box>
-                                    <TextField {...endProps} />
-                                </React.Fragment>
-                            )}
-                        />
-                    </LocalizationProvider>
+                        <p>Date Range (up to 4 weeks)</p>
+                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                            <MobileDateRangePicker
+                                value={dates}
+                                maxDate={getWeeksAfter(dates[0], 4)}
+                                onChange={(newValue) => {
+                                    this.setState({dates: newValue});
+                                }}
+                                renderInput={(startProps, endProps) => (
+                                    <React.Fragment>
+                                        <TextField {...startProps} />
+                                        <Box sx={{mx: 2}}> to </Box>
+                                        <TextField {...endProps} />
+                                    </React.Fragment>
+                                )}
+                            />
+                        </LocalizationProvider>
                     </div>
                     <div className={"search"}>
-                    <TextField
-                        id="outlined-multiline-flexible"
-                        label="Search" multiline
-                        maxRows={4}
-                        value={search}
-                        onChange={this.handleSearch}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment>
-                                    <IconButton>
-                                        <SearchIcon/>
-                                    </IconButton>
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                </div>
+                        <TextField
+                            id="outlined-multiline-flexible"
+                            label="Search" multiline
+                            maxRows={4}
+                            value={search}
+                            onChange={this.handleSearch}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment>
+                                        <IconButton>
+                                            <SearchIcon/>
+                                        </IconButton>
+                                    </InputAdornment>
+                                )
+                            }}
+                        />
+                    </div>
                 </div>
                 <Paper sx={{width: '100%', overflow: 'hidden'}}>
                     <TableContainer sx={{maxHeight: 500}}>

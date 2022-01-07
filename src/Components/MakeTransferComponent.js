@@ -14,7 +14,7 @@ class MakeTransferComponent extends Component {
 
     componentDidMount() {
         if (this.props.data.accounts.length === 0) {
-            this.props.dispatch(getAccountsAction(this.state.user.id))
+            this.props.dispatch(getAccountsAction(this.state.user.id)) //get accounts list
                 .then(data => {
                     console.log(data.payload.data);
                 }).catch(err => {
@@ -23,7 +23,7 @@ class MakeTransferComponent extends Component {
         }
     }
 
-    handleSubmit = (values) => {
+    handleSubmit = (values, resetForm) => {
         const user_id = this.state.user.id;
         const data = {
             amount: values.amount,
@@ -38,14 +38,20 @@ class MakeTransferComponent extends Component {
                 this.setState({
                     error: null,
                 });
+                resetForm({});
+                this.props.history.push("/history");
             })
             .catch(err => {
+                 // if we have an error with a response we display
+                // the message otherwise we display just the error message
                 const message = err.response ? err.response.data.data.errorMessage : err.message;
                 this.setState({
                     error: message
                 });
+                resetForm({});
             });
     };
+    // getAmountMax return max ammount possible (if the balance is possitive or 0 otherwise )
     getAmountMax = (debitAccount) => {
         let solde = 0;
         if (debitAccount) {
@@ -53,7 +59,7 @@ class MakeTransferComponent extends Component {
         }
         return solde < 0 ? 0 : solde;
     }
-    handelValidation = values => {
+    handleValidation = values => {
         const errors = {};
         const amountMax = this.getAmountMax(values.debitAccount);
         console.log(this.state.error);
@@ -88,11 +94,11 @@ class MakeTransferComponent extends Component {
             <div className={"login_form transfer_form"}>
                 <Formik
                     initialValues={{amount: 0, creditAccount: '', debitAccount: '', reason: ''}}
-                    validate={this.handelValidation}
-                    onSubmit={(values, {setSubmitting}) => {
+                    validate={this.handleValidation}
+                    onSubmit={(values, {setSubmitting,resetForm}) => {
                         setTimeout(() => {
                             setSubmitting(false);
-                            this.handleSubmit(values);
+                            this.handleSubmit(values,resetForm);
                         }, 400);
                     }}
                 >
